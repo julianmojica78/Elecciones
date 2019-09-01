@@ -5,12 +5,26 @@
  */
 package controlador;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import org.primefaces.model.StreamedContent;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.chart.PieChartModel;
 
 /**
@@ -19,15 +33,16 @@ import org.primefaces.model.chart.PieChartModel;
  */
 @ManagedBean(name = "ele")
 @RequestScoped
-public class Eleccion implements Serializable{
+public class Eleccion implements Serializable {
 
-    PieChartModel modelo =  new PieChartModel();
-   
-    public Eleccion(){
+    PieChartModel modelo = new PieChartModel();
+      private StreamedContent imagen;
+
+    public Eleccion() {
     }
-    public void graficar(ArrayList<Candidato> lista){
-        
-        
+
+    public void graficar(ArrayList<Candidato> lista) {
+
         for (Candidato lista1 : lista) {
             modelo.set(lista1.getNombre(), lista1.getVotos());
         }//for
@@ -37,15 +52,69 @@ public class Eleccion implements Serializable{
         modelo.setShowDataLabels(true);
         modelo.setDiameter(150);
     }//graficar
-    
-    public void votacion(ArrayList<Candidato> lista,String nombre){
+
+    public void votacion(ArrayList<Candidato> lista, String nombre) {
         for (Candidato lista1 : lista) {
-            if(lista1.getNombre().equals(nombre)){
-                lista1.setVotos(lista1.getVotos()+1);
+            if (lista1.getNombre().equals(nombre)) {
+                lista1.setVotos(lista1.getVotos() + 1);
             }
         }
         graficar(lista);
     }//votacion
+
+    public StreamedContent mostrarImagen(String nombreArchivo) throws IOException {
+        ByteArrayOutputStream out = null;
+        if (nombreArchivo == null) {
+            out = traerArchivo("~\\Elecciones\\src\\java\\resources\\", "prueba.jpg");
+            InputStream myInputStream2 = new ByteArrayInputStream(out.toByteArray());
+            return new DefaultStreamedContent(myInputStream2);
+        }
+        if (nombreArchivo.length() > 0) {
+            File fichero = new File(nombreArchivo);
+            out = traerArchivo("C:\\Users\\Jonathan\\Documents\\2019-ll\\Linea de profundizacion ll\\Elecciones\\src\\java\\resources\\", nombreArchivo);
+            InputStream myInputStream2 = new ByteArrayInputStream(out.toByteArray());
+            return new DefaultStreamedContent(myInputStream2);
+
+        } else {
+            out = traerArchivo("C:\\Users\\Jonathan\\Documents\\2019-ll\\Linea de profundizacion ll\\Elecciones\\src\\java\\resources\\", "prueba.jpg");
+            InputStream myInputStream2 = new ByteArrayInputStream(out.toByteArray());
+            return new DefaultStreamedContent(myInputStream2);
+        }
+    }
+
+    public ByteArrayOutputStream traerArchivo(String ruta, String nombre_archivo) {
+
+        ByteArrayOutputStream out = null;
+        String path = ruta + nombre_archivo;
+        InputStream in = null;
+
+        try {
+            File remoteFile = new File(path);
+            in = new BufferedInputStream(new FileInputStream(remoteFile));
+            out = new ByteArrayOutputStream((int) remoteFile.length());
+            byte[] buffer = new byte[1024];
+            int len = 0; //Read length
+            while ((len = in.read(buffer, 0, buffer.length)) != - 1) {
+                out.write(buffer, 0, len);
+            }
+            out.flush();
+        } catch (Exception e) {
+            String msg = "ERROR DESCARGANDO ARCHIVO " + e.getMessage();
+            System.out.println(msg);
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+
+        return out;
+    }
 
     public PieChartModel getModelo() {
         return modelo;
@@ -54,6 +123,5 @@ public class Eleccion implements Serializable{
     public void setModelo(PieChartModel modelo) {
         this.modelo = modelo;
     }
-    
-    
+
 }

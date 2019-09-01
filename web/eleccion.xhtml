@@ -17,42 +17,44 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <h:form id="formulario">
-         <p:dataTable var="lista" value="#{candidato.lista}">
-            <p:column headerText="#{voto.nombre}">
-                <h:outputText value="#{lista.nombre}" />
-            </p:column>
+            <p:dataTable var="lista" value="#{candidato.lista}">
+                <p:column headerText="#{voto.nombre}">
+                    <h:outputText value="#{lista.nombre}" />
+                </p:column>
 
-            <p:column headerText="#{voto.foto}">
-                <h:outputText value="#{lista.foto}" />
-            </p:column>
+                <p:column headerText="#{voto.foto}">
+                    <p:graphicImage height="96" width="96" cache="false" value="/#{ele.mostrarImagen(candidato.foto)}">
+                        <f:param value="1" name="#{candidato.foto}"/>
+                    </p:graphicImage>
+                </p:column>
 
-            <p:column headerText="#{voto.partido}">
-                <h:outputText value="#{lista.partido}" />
-            </p:column>
+                <p:column headerText="#{voto.partido}">
+                    <h:outputText value="#{lista.partido}" />
+                </p:column>
 
-            <p:column headerText="#{voto.fecha}">
-                <h:outputText value="#{lista.fechaNacimiento}" />
-            </p:column>
-            
-            <p:column headerText="#{voto.descripcion}">
-                <h:outputText value="#{lista.descripcion}" />
-            </p:column>
-            
-            <p:column headerText="#{voto.votar}">
-                <p:commandButton value="#{voto.votar}"  onclick ="#{ele.graficar(candidato.lista)}" action="#{ele.votacion(candidato.lista,lista.nombre)}" update=":formulario:panel" style="margin-right:20px;" />
-            </p:column>
-             
-        </p:dataTable>
-        <p:button outcome="resultado" value="#{voto.resultado}"  />
-        <p:outputPanel id="panel">
-            
+                <p:column headerText="#{voto.fecha}">
+                    <h:outputText value="#{lista.fechaNacimiento}" />
+                </p:column>
 
-            <h:panelGroup id="grafica"  layout="block">
+                <p:column headerText="#{voto.descripcion}">
+                    <h:outputText value="#{lista.descripcion}" />
+                </p:column>
 
-             <p:chart type="pie"  model="#{ele.modelo}" style="width:400px;height:300px" rendered="#{ele.modelo != null}"/>
-             
-            </h:panelGroup>
-        </p:outputPanel>  
+                <p:column headerText="#{voto.votar}">
+                    <p:commandButton value="#{voto.votar}"  onclick ="#{ele.graficar(candidato.lista)}" action="#{ele.votacion(candidato.lista,lista.nombre)}" update=":formulario:panel" style="margin-right:20px;" />
+                </p:column>
+
+            </p:dataTable>
+            <p:button outcome="resultado" value="#{voto.resultado}"  />
+            <p:outputPanel id="panel">
+
+
+                <h:panelGroup id="grafica"  layout="block">
+
+                    <p:chart type="pie"  model="#{ele.modelo}" style="width:400px;height:300px" rendered="#{ele.modelo != null}"/>
+
+                </h:panelGroup>
+            </p:outputPanel>  
         </h:form>
     </h:body>
 </html>

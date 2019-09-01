@@ -9,8 +9,10 @@ package controlador;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import org.primefaces.component.fileupload.FileUpload;
 import org.primefaces.model.UploadedFile;
 import org.primefaces.model.chart.PieChartModel;
@@ -34,6 +36,8 @@ public class Candidato implements Serializable {
     private String descripcion;
     
     private int votos;
+    
+    private UploadedFile file;
     
     ArrayList<Candidato> lista = new ArrayList();
     
@@ -136,6 +140,20 @@ public class Candidato implements Serializable {
     public void setModelo(PieChartModel modelo) {
         this.modelo = modelo;
     }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
     
-    
+        public void upload() {
+        if(file != null) {
+            FacesMessage message = new FacesMessage("Exito", file.getFileName() + " Esta Subido.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+            foto = file.getFileName();
+        }
+    }
 }//Candidato
