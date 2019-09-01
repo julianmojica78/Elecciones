@@ -13,13 +13,13 @@
             </resource-bundle>    
         
             <resource-bundle>
-                <base-name>propiedades.votacion</base-name>
-                <var>votacion</var>
+                <base-name>propiedades.voto</base-name>
+                <var>voto</var>
             </resource-bundle> 
             
             <resource-bundle>
                 <base-name>propiedades.resultado</base-name>
-                <var>resultado</var>
+                <var>ganador</var>
             </resource-bundle> 
     </application>
 

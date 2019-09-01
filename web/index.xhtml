@@ -16,7 +16,6 @@
                 <p:outputLabel value="#{msg.foto}" />    
                 <p:outputLabel value="#{candidato.foto}"  />
                 
-                
                 <p:outputLabel value="#{msg.partido}" />
                 <p:inputText value="#{candidato.partido}" />
                 
@@ -29,7 +28,7 @@
             </h:panelGrid>
             
             <p:commandButton value="#{msg.boton}"  action="#{candidato.GuardarCandidato(candidato.nombre, candidato.foto, candidato.partido, candidato.fechaNacimiento, candidato.descripcion)}" style="margin-right:20px;" />
-            <p:button outcome="votacion" value="#{msg.votar}" style="margin-right:20px;"/>
+            <p:button outcome="eleccion" value="#{msg.votar}" style="margin-right:20px;"/>
         </h:form>
 
     </h:body>

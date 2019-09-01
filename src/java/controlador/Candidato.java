@@ -1,3 +1,5 @@
+package controlador;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,6 +13,7 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import org.primefaces.component.fileupload.FileUpload;
 import org.primefaces.model.UploadedFile;
+import org.primefaces.model.chart.PieChartModel;
 
 /**
  *
@@ -34,6 +37,8 @@ public class Candidato implements Serializable {
     
     ArrayList<Candidato> lista = new ArrayList();
     
+    PieChartModel modelo =  new PieChartModel();
+    
     public Candidato() {
     }//constructor
 
@@ -46,6 +51,27 @@ public class Candidato implements Serializable {
         candidato.descripcion = descripcion;
         lista.add(candidato);
     }
+    
+    public void graficar(ArrayList<Candidato> lista){
+        
+        
+        for (Candidato lista1 : lista) {
+            modelo.set(lista1.getNombre(), lista1.getVotos());
+        }//for
+        modelo.setTitle("Votacion");
+        modelo.setLegendPosition("e");
+        modelo.setFill(false);
+        modelo.setShowDataLabels(true);
+        modelo.setDiameter(150);
+    }//graficar
+    
+     public void votacion(ArrayList<Candidato> lista){
+        for (Candidato lista1 : lista) {
+            if(lista1.getVotos() == 10){
+                lista1.setVotos(20);
+            }
+        }
+    }//votacion
     
     public String getNombre() {
         return nombre;
@@ -103,6 +129,13 @@ public class Candidato implements Serializable {
         this.lista = lista;
     }
 
-   
+       public PieChartModel getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(PieChartModel modelo) {
+        this.modelo = modelo;
+    }
+    
     
 }//Candidato

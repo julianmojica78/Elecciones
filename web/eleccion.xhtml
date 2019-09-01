@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Facelets Template</title>
+    </h:head>
+    <h:body>
+        <h:form id="formulario">
+         <p:dataTable var="lista" value="#{candidato.lista}">
+            <p:column headerText="#{voto.nombre}">
+                <h:outputText value="#{lista.nombre}" />
+            </p:column>
+
+            <p:column headerText="#{voto.foto}">
+                <h:outputText value="#{lista.foto}" />
+            </p:column>
+
+            <p:column headerText="#{voto.partido}">
+                <h:outputText value="#{lista.partido}" />
+            </p:column>
+
+            <p:column headerText="#{voto.fecha}">
+                <h:outputText value="#{lista.fechaNacimiento}" />
+            </p:column>
+            
+            <p:column headerText="#{voto.descripcion}">
+                <h:outputText value="#{lista.descripcion}" />
+            </p:column>
+            
+            <p:column headerText="#{voto.votar}">
+                <p:commandButton value="#{voto.votar}"  onclick ="#{ele.graficar(candidato.lista)}" action="#{ele.votacion(candidato.lista,lista.nombre)}" update=":formulario:panel" style="margin-right:20px;" />
+            </p:column>
+             
+        </p:dataTable>
+        <p:button outcome="resultado" value="#{voto.resultado}"  />
+        <p:outputPanel id="panel">
+            
+
+            <h:panelGroup id="grafica"  layout="block">
+
+             <p:chart type="pie"  model="#{ele.modelo}" style="width:400px;height:300px" rendered="#{ele.modelo != null}"/>
+             
+            </h:panelGroup>
+        </p:outputPanel>  
+        </h:form>
+    </h:body>
+</html>
