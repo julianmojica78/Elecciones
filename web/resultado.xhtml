@@ -3,47 +3,54 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
+        <!-- Custom fonts for this template-->
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Custom styles for this template-->
+        <link href="css/sb-admin.css" rel="stylesheet"/>
         <title>Facelets Template</title>
     </h:head>
 
-    <h:body>
+    <h:body class="bg-dark">
+        <h:panelGrid columns="2">
+            <h:form>   
+                <p:outputLabel value="#{ganador.mensaje}" />
+                <p:commandButton onclick="#{resultado.ganador(candidato.lista)}" disabled="true"/>
+                <p:dataTable var="lista" value="#{resultado.ganador}">
 
-        <h:form>
-            
-            <p:outputLabel value="#{ganador.mensaje}" />
-            <p:commandButton onclick="#{resultado.ganador(candidato.lista)}" disabled="true"/>
-            <p:dataTable var="lista" value="#{resultado.ganador}">
-                
-                <p:column headerText="#{ganador.nombre}">
-                    <h:outputText value="#{lista.nombre}" />
-                </p:column>
-                
-                <p:column headerText="#{ganador.foto}">
-                    <h:outputText value="#{lista.foto}" />
-                </p:column>
-                
-                <p:column headerText="#{ganador.partido}">
-                    <h:outputText value="#{lista.partido}" />
-                </p:column>
-                
-                <p:column headerText="#{ganador.fecha}">
-                    <h:outputText value="#{lista.fechaNacimiento}" />
-                </p:column>
-                
-                <p:column headerText="#{ganador.descripcion}">
-                    <h:outputText value="#{lista.descripcion}" />
-                </p:column>
-            
-            </p:dataTable>
-            
-        </h:form>
+                    <p:column headerText="#{ganador.nombre}">
+                        <h:outputText value="#{lista.nombre}" />
+                    </p:column>
 
+                    <p:column headerText="#{ganador.foto}">
+                        <h:outputText value="#{lista.foto}" />
+                    </p:column>
+
+                    <p:column headerText="#{ganador.partido}">
+                        <h:outputText value="#{lista.partido}" />
+                    </p:column>
+
+                    <p:column headerText="#{ganador.fecha}">
+                        <h:outputText value="#{lista.fechaNacimiento}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{ganador.descripcion}">
+                        <h:outputText value="#{lista.descripcion}" />
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+        </h:panelGrid>
     </h:body>
 
 </html>

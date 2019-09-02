@@ -28,19 +28,26 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.chart.PieChartModel;
 
 /**
- *
+ * clase ManagedBean para la vista eleccion 
  * @author Jonathan
  */
 @ManagedBean(name = "ele")
 @RequestScoped
 public class Eleccion implements Serializable {
 
+    /**
+     * atributo PieChartModel para la grafica
+     */
     PieChartModel modelo = new PieChartModel();
-      private StreamedContent imagen;
-
+    /**
+     * constructor de eleccion
+     */
     public Eleccion() {
     }
-
+    /**
+     * metodo para graficar los votos
+     * @param lista 
+     */
     public void graficar(ArrayList<Candidato> lista) {
 
         for (Candidato lista1 : lista) {
@@ -52,7 +59,11 @@ public class Eleccion implements Serializable {
         modelo.setShowDataLabels(true);
         modelo.setDiameter(150);
     }//graficar
-
+    /**
+     * metodo para calcular los votos de los candidatos 
+     * @param lista
+     * @param nombre 
+     */
     public void votacion(ArrayList<Candidato> lista, String nombre) {
         for (Candidato lista1 : lista) {
             if (lista1.getNombre().equals(nombre)) {
@@ -61,7 +72,12 @@ public class Eleccion implements Serializable {
         }
         graficar(lista);
     }//votacion
-
+    /**
+     * funcion para mostrar la imagen
+     * @param nombreArchivo
+     * @return
+     * @throws IOException 
+     */
     public StreamedContent mostrarImagen(String nombreArchivo) throws IOException {
         ByteArrayOutputStream out = null;
         if (nombreArchivo == null) {
@@ -81,7 +97,12 @@ public class Eleccion implements Serializable {
             return new DefaultStreamedContent(myInputStream2);
         }
     }
-
+    /**
+     * funcion para convertir la imagen
+     * @param ruta
+     * @param nombre_archivo
+     * @return 
+     */
     public ByteArrayOutputStream traerArchivo(String ruta, String nombre_archivo) {
 
         ByteArrayOutputStream out = null;
@@ -115,11 +136,17 @@ public class Eleccion implements Serializable {
 
         return out;
     }
-
+    /**
+     * metodo para obtener el modelo para la grafica
+     * @return modelo
+     */
     public PieChartModel getModelo() {
         return modelo;
     }
-
+    /**
+     * metodo para modificar el modelo para la grafica
+     * @param modelo 
+     */
     public void setModelo(PieChartModel modelo) {
         this.modelo = modelo;
     }

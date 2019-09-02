@@ -5,52 +5,58 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Inscripcion</title>
+
+        <!-- Custom fonts for this template-->
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Custom styles for this template-->
+        <link href="css/sb-admin.css" rel="stylesheet"/>
     </h:head>
-    <h:body>
-        <h:form id= "form" enctype="multipart/form-data">
-            <p:growl id="growl" life="2000" showDetail="true"/>
-            <h:panelGrid columns="4">
-                <p:outputLabel value="#{msg.nombre}" />
-                <p:inputText id ="nombre" value="#{candidato.nombre}" required="true">
-                    <f:validateLength minimum="4" maximum="20" />
-                    <f:validateRegex pattern="^[a-zA-Z ]+$" />
-                </p:inputText>
-                <p:message for="nombre" />
-                <br></br>
-                <p:outputLabel value="#{msg.foto}" />    
-                <p:fileUpload value="#{candidato.file}"
-                              sizeLimit="10000000"
-                              mode="simple"
-                              style="width: 100%"
-                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-                <p:commandButton value="Cargar Imagen" ajax="false" action="#{candidato.upload}" disabled="false" />
-                <br></br>
-                <p:outputLabel value="#{msg.partido}" />
-                <p:inputText id="partido" value="#{candidato.partido}" required="true">
-                    <f:validateLength minimum="4" maximum="20" />
-                    <f:validateRegex pattern="^[a-zA-Z ]+$" />
-                </p:inputText>
-                <p:message for="partido" />
-                <br></br>
-                <p:outputLabel value="#{msg.fecha}" />
-                <p:calendar id="mask" value="#{candidato.fechaNacimiento}"  required="true" mindate="4/1/80" maxdate="1/9/00" pattern="dd/MM/yyyy"/>
-                <p:message for="mask"/>
-                <br></br>
-                <p:outputLabel value="#{msg.descripcion}" />
-                <p:inputTextarea id="descripcion" value="#{candidato.descripcion}" rows="7" cols="30" counter="display" maxlength="100" counterTemplate="{0} caracteres restantes." autoResize="false" required="true" >
-                    <f:validateLength minimum="10" maximum="100" />
-                    <f:validateRegex pattern="^[a-zA-Z ]+$" />
-                </p:inputTextarea>
-                <h:outputText id="display" />
-                <p:message for="descripcion" />
+    <h:body class="bg-dark">
+        <div class="container">
+        <div class="card card-register mx-auto mt-5">
+                <div class="card-header">Inscripcion</div>
+                <div class="card-body" align="">
+                    <h:form id= "form" enctype="multipart/form-data">
+                        <p:growl id="growl" life="2000" showDetail="true"/>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="#{msg.nombre}" />
+                            <p:inputText id ="nombre" value="#{candidato.nombre}" required="true" class="form-control">
+                                <f:validateLength minimum="4" maximum="20" />
+                                <f:validateRegex pattern="^[a-zA-Z ]+$" />
+                            </p:inputText>
+                            
+                            <p:outputLabel value="#{msg.foto}" />    
+                            <p:fileUpload value="#{candidato.file}"
+                                          sizeLimit="10000000"
+                                          mode="simple"
+                                          style="width: 100%"
+                                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                            <p:commandButton value="Cargar Imagen" ajax="false" action="#{candidato.upload}" disabled="false" />
+                            <br></br>
+                            <p:outputLabel value="#{msg.partido}" />
+                            <p:inputText id="partido" value="#{candidato.partido}" required="true">
+                                <f:validateLength minimum="4" maximum="20" />
+                                <f:validateRegex pattern="^[a-zA-Z ]+$" />
+                            </p:inputText>
+                            <p:outputLabel value="#{msg.fecha}" />
+                            <p:calendar id="mask" value="#{candidato.fechaNacimiento}"  required="true" mindate="4/1/80" maxdate="1/9/00" pattern="dd/MM/yyyy"/>
+                            <p:outputLabel value="#{msg.descripcion}" />
+                            <p:inputTextarea id="descripcion" value="#{candidato.descripcion}" rows="7" cols="30" counter="display" maxlength="100" counterTemplate="{0} caracteres restantes." autoResize="false" required="true" >
+                                <f:validateLength minimum="10" maximum="100" />
+                                <f:validateRegex pattern="^[a-zA-Z ]+$" />
+                            </p:inputTextarea>
+                            <h:outputText id="display" />
 
-            </h:panelGrid>
+                        </h:panelGrid>
 
-            <p:commandButton value="#{msg.boton}"  action="#{candidato.GuardarCandidato(candidato.nombre, candidato.foto, candidato.partido, candidato.fechaNacimiento, candidato.descripcion)}" style="margin-right:20px;" ajax="false" />
-            <p:button outcome="eleccion" value="#{msg.votar}" style="margin-right:20px;"/>
-        </h:form>
-
+                        <p:commandButton value="#{msg.boton}"  action="#{candidato.GuardarCandidato(candidato.nombre, candidato.foto, candidato.partido, candidato.fechaNacimiento, candidato.descripcion)}"  update="growl" style="margin-right:20px;" ajax="false" />
+                        <p:button outcome="eleccion" value="#{msg.votar}" style="margin-right:20px;"/>
+                    </h:form>  
+                </div>
+            </div>
+        </div>
     </h:body>
 </html>
 
